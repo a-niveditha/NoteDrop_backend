@@ -17,5 +17,5 @@ class Paper(Base):
     pdf_url = Column(String, nullable=True)
     summary = Column(Text, nullable=True)
     indexing_status = Column(String, default="pending")  # pending | ready | failed
-    added_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    added_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
+    created_at = Column(DateTime, default=datetime.timezone.utc)
