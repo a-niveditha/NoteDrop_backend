@@ -1,3 +1,8 @@
 myvenv
-.env 
+.env
+ai/src/data/processed/
+venv/
+.venv/
+__pycache__/
+*.pyc
 __pycache__
