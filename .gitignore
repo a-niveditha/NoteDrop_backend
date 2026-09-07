@@ -1,8 +1,6 @@
 myvenv
 .env
 ai/src/data/processed/
-ai/src/data/*.pdf
-data/*.pdf
 venv/
 .venv/
 __pycache__/
