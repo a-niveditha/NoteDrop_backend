@@ -6,6 +6,7 @@ from database import get_db
 from schemas.chat import ChatRequest, ChatResponse, ChatMessageOut
 from crud.chat import save_chat, get_chat_history, history_to_dicts
 from crud.paper import get_papers_by_ids
+from crud.note import get_shared_notes_for_room, notes_to_dicts
 from ai.chat import answer  # swap this import target once teammate's real version lands
 
 router = APIRouter(prefix="/rooms/{room_id}/chat", tags=["chat"])
@@ -33,10 +34,15 @@ def send_message(room_id: uuid.UUID, payload: ChatRequest, db: Session = Depends
     history_rows = get_chat_history(db, room_id, payload.user_id)
     history = history_to_dicts(history_rows)
 
-    # 4. Call the AI function (stub for now, swapped for real RAG later)
-    reply = answer(payload.paper_ids or [], payload.message, history)
+    # 4. Pull every shared note in the room — always all of them, not user-selected,
+    #    so the AI has full visibility into what the team has already found/flagged
+    shared_note_rows = get_shared_notes_for_room(db, room_id)
+    shared_notes = notes_to_dicts(shared_note_rows)
 
-    # 5. Save and return the assistant's reply
+    # 5. Call the AI function (stub for now, swapped for real RAG later)
+    reply = answer(payload.paper_ids or [], payload.message, history, shared_notes)
+
+    # 6. Save and return the assistant's reply
     save_chat(db, room_id, payload.user_id, "assistant", reply, payload.paper_ids)
 
     return ChatResponse(reply=reply)

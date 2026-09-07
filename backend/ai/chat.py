@@ -1,7 +1,7 @@
 import uuid
 
 
-def answer(paper_ids: list[uuid.UUID], message: str, history: list[dict]) -> str:
+def answer(paper_ids: list[uuid.UUID], message: str, history: list[dict], shared_notes: list[dict]) -> str:
     """
     STUB — replace with real RAG implementation.
 
@@ -20,4 +20,4 @@ def answer(paper_ids: list[uuid.UUID], message: str, history: list[dict]) -> str
         The assistant's reply text.
     """
     paper_list = ", ".join(str(pid) for pid in paper_ids) if paper_ids else "no papers selected"
-    return f"[stub response] You asked: '{message}' (scoped to: {paper_list})"
+    return f"[stub response] You asked: '{message}' (scoped to: {paper_list}, scoped to: {shared_notes})"
