@@ -15,7 +15,8 @@ class Paper(Base):
     authors = Column(String, nullable=True)
     arxiv_id = Column(String, nullable=True)
     pdf_url = Column(String, nullable=True)
+    parsed_text = Column(Text, nullable=True)  # full extracted text, persisted so it doesn't need re-parsing
     summary = Column(Text, nullable=True)
     indexing_status = Column(String, default="pending")  # pending | ready | failed
-    added_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
-    created_at = Column(DateTime, default=datetime.timezone.utc)
+    added_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)

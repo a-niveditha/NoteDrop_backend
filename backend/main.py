@@ -3,7 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from database import Base, engine
 import models  # noqa: F401 — ensures all models are registered before create_all
-from routers import chat, user, room
+from routers import chat, user, room, paper
+
+from dotenv import load_dotenv
+load_dotenv()
 
 app = FastAPI(title="Research Room API")
 
@@ -23,6 +26,7 @@ Base.metadata.create_all(bind=engine)
 app.include_router(user.router)
 app.include_router(room.router)
 app.include_router(chat.router)
+app.include_router(paper.router)
 
 
 @app.get("/health")
