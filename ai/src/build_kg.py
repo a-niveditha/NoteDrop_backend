@@ -5,7 +5,7 @@ import sys
 sys.path.append(str(Path(__file__).resolve().parent.parent / "src"))
 
 from pdf_parser import parse_pdf_for_llm
-from kg_extractor import extract_paper_knowledge
+from kg_extractor import extract_paper_knowledge 
 
 
 def process_paper(pdf_path: str, paper_id: str, output_dir: str = "data/processed") -> dict:
